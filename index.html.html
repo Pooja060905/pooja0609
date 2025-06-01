@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Countdown to your birthday</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('img/rom.webp') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 40px 50px;
+      background: rgba(255, 192, 203, 0.3); /* light pink with transparency */
+      border-radius: 25px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.4);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 15px;
+      color: #ff69b4; /* hot pink */
+      text-shadow: 0 0 10px #ff1493;
+    }
+
+    #countdown {
+      font-size: 2.2em;
+      margin: 20px 0;
+      color: #fff;
+      text-shadow: 0 0 6px #ff1493;
+    }
+
+    #message {
+      font-size: 1.5em;
+      display: none;
+      color: #ffe6f0;
+      text-shadow: 0 0 8px #ff69b4;
+    }
+
+    .emoji {
+      font-size: 4em;
+      margin-bottom: 15px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .hearts span {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center center / cover;
+      animation: float 10s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay"></div>
+
+  <div class="container">
+    <div class="emoji">🌸🎂💖</div>
+    <h1>Countdown to your birthday</h1>
+    <div id="countdown"></div>
+    <div id="message">
+      🌷 Happy Birthday, Pooja! 🌷<br>
+      You brighten my world like these flowers.<br>
+      Wishing you a day full of love and happiness! 💕
+    </div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    // Floating hearts animation
+    const hearts = document.getElementById("hearts");
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('span');
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      heart.style.width = heart.style.height = (15 + Math.random() * 10) + "px";
+      hearts.appendChild(heart);
+    }
+
+    // Countdown to November 6, 2025
+    const birthday = new Date("2025-11-06T00:00:00").getTime();
+    const countdownEl = document.getElementById("countdown");
+    const messageEl = document.getElementById("message");
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = birthday - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance > 0) {
+        countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s left 💝`;
+      } else {
+        clearInterval(timer);
+        countdownEl.style.display = "none";
+        messageEl.style.display = "block";
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
+
+
